@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS Attack Simulation Dashboard</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00c6ff;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #2b2b3a;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+        }
+
+        canvas {
+            background-color: #2b2b3a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DDoS Attack Simulation Dashboard</h1>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Total Requests</h2>
+            <p id="total-requests">0</p>
+        </div>
+        <div class="card">
+            <h2>Blocked IPs</h2>
+            <p id="blocked-ips">0</p>
+        </div>
+        <div class="card">
+            <h2>Current Request</h2>
+            <p id="current-ip">Waiting for data...</p>
+        </div>
+    </div>
+
+    <canvas id="trafficChart" width="600" height="400"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let totalRequests = 0;
+        let blockedCount = 0;
+        let requestData = {};
+
+        const socket = new WebSocket('ws://localhost:3005');
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const ip = data.ip;
+            const count = data.count;
+
+            totalRequests++;
+            document.getElementById('total-requests').textContent = totalRequests;
+
+            document.getElementById('current-ip').textContent = ip;
+
+            if (count === undefined) {
+                blockedCount++;
+                document.getElementById('blocked-ips').textContent = blockedCount;
+            }
+
+            updateChart(ip);
+        };
+
+        let trafficChart = new Chart(document.getElementById('trafficChart'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Request Count',
+                    data: [],
+                    backgroundColor: 'rgba(0, 198, 255, 0.2)',
+                    borderColor: '#00c6ff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: '#424356'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: '#424356'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+
+        function updateChart(ip) {
+            if (!trafficChart.data.labels.includes(ip)) {
+                trafficChart.data.labels.push(ip);
+                trafficChart.data.datasets[0].data.push(1);
+            } else {
+                const index = trafficChart.data.labels.indexOf(ip);
+                trafficChart.data.datasets[0].data[index]++;
+            }
+            trafficChart.update();
+        }
+    </script>
+</body>
+</html>
