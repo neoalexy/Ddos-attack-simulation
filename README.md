@@ -1,6 +1,6 @@
-# Ddos-attack-simulation
+# DDoS Attack Simulation Dashboard
 
-A web-based dashboard that simulates Distributed Denial of Service (DDoS) attacks, tracking incoming requests from multiple IP addresses and visualizing the blocking of malicious IPs in real-time.
+A web-based dashboard that simulates Distributed Denial of Service (DDoS) attacks using **Node.js**, **Express.js**, and **WebSocket**, tracking incoming requests from multiple IP addresses and visualizing the blocking of malicious IPs in real-time.
 
 ## Features
 - **Real-time Request Tracking**: Displays incoming requests from various IPs.
@@ -8,18 +8,14 @@ A web-based dashboard that simulates Distributed Denial of Service (DDoS) attack
 - **Interactive Dashboard**: Visualize the flow of requests and blocked IPs with dynamic charts.
 
 ## Technologies Used
-- **Node.js**: Backend server and WebSocket management.
-- **Express.js**: API framework for handling HTTP requests.
-- **WebSocket**: Real-time communication with the front end.
-- **Chart.js**: Visualization library for dynamic charts.
-- **HTML/CSS**: Frontend dashboard design.
-- **Axios**: Simulate requests to the server.
+- **Node.js**
+- **Express.js**
+- **WebSocket**
+- **Chart.js** for data visualization
 
-## Screenshots
-
-### Dashboard Overview
-![Dashboard Screenshot](./assets/dashboard-overview.png)
-
-### Real-Time IP Blocking
-![IP Blocking](./assets/ip-blocking.gif)
+## Assets
+- **Video**: A demonstration of the DDoS simulation can be found in the `assets` folder as `ddos_simulation.mp4`.
+- **Screenshots**: Included are screenshots of the dashboard:
+  - ![Screenshot 1](assets/screenshot1.png)
+  - ![Screenshot 2](assets/screenshot2.png)
 
