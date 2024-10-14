@@ -16,6 +16,6 @@ A web-based dashboard that simulates Distributed Denial of Service (DDoS) attack
 ## Assets
 - **Video**: A demonstration of the DDoS simulation can be found in the `assets` folder as `ddos_simulation.mp4`.
 - **Screenshots**: Included are screenshots of the dashboard:
-  - ![Screenshot 1](assets/screenshot1.png)
-  - ![Screenshot 2](assets/screenshot2.png)
+  - ![Screenshot 1](assets/Screenshot1.png)
+  - ![Screenshot 2](assets/Screenshot2.png)
 
